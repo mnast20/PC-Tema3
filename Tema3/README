@@ -1,0 +1,82 @@
+Nastase Maria
+311 CA
+In fiecare caz se citeste un sir de caractere si se numara cuvintele.
+Primul cuvant reprezinta comanda data, iar restul sunt parametrii comenzii.
+In functie de comanda data, se considera urmatoarele cazuri:
+1) LOAD: In cazul in care numarul de cuvinte este egal cu 2, se extrage
+        numere fisierului, care este deschis in mod text pentru a citi tipul imaginii,
+        numarul coloanelor si al liniilor si valoarea maxima a culorii.
+        In cazul in care este de tipul 5 sau 6, fisierul se redeschide in format binar si se continua citirea matricei.
+        In caz contrar, se continua citirea din acelasi fisier in format text.
+
+2) SELECT: In cadrul acestei instructiuni, daca sunt dati 4 parametri numere
+          de tip int, valorile acestea se compara cu indexul minim si maxim al
+          fiecarei coloane si linii. In cazul in care apartin intervalului,
+          acestea se retin. Daca se da ca parametru "ALL", valorile coordonatelor
+          de selectie se reseteaza la valoarea lor oreiginala (x1 = 0, x2 = m, y1 = 0, y2 = n).
+
+3) ROTATE: In cazul in care unghiul este corespunzator (divizibil cu 90), acesta
+          se prelucreaza pentru a apartine intervalului [0, 360) si se obtine
+          unghiul normalizat. In cazul in care matricea selectata sau intreaga
+          este patratica, pixelii din intervalul [x1, x2) si [y1, y2) se rotesc
+          la 90 de grade si se repeta procesul cu rotatii de 90 de grade pana la
+          unghiul normalizat. In cazul in care imaginea intreaga e dreptunghiulara,
+          daca unghiul este 90 sau 270, se interschimba numarul de linii cu cel de
+          coloane si matricea se va aloca din nou si va face o rotatie de 90 de grade.
+          In cazul in care unghiul este 180, nu e necesara realocarea matricei.
+          Daca unghiul este diferit de 0 sau 90, se va mai face o rotatie.
+
+4) CROP: In cazul in care s-a apelat un select inainte de crop si numarul de
+        linii si coloane ale matricii initiale sunt diferite de numarul de
+        linii si coloane ale matricei de selectie, se aloca matricea din nou
+        si primeste valorile din matricea selectata.
+
+5) GRAYSCALE: Daca imaginea este color, conform formulei date in enunt, se calculeaza
+            noua valoare RGB si prin intermediul unei functii de rotunjire, valoarea
+            noua se aproximeaza la cel mai apropiat numar intreg si i se atribuie fiecarei culori.
+
+6) SEPIA: Se calculeaza noile valori de rosu, verde si albastru si prin intermediul
+         unei functii de rotunjire, se aproximeaza la cel mai apropiat numar intreg.
+         In cazul in care una dintre noile valori RGB este mai mare decat cea a
+         culorii maxime date, se va inlocui cu valoarea de culoarea maxima.
+
+7) SAVE: Daca numarul de cuvinte este 2 sau 3, se extrage numele fisierul
+        (din primul parametru al comenzii date) in care sa se salveze imaginea prelucrata.
+        Daca se da si parametrul "ascii", atunci se deschide fisierul in format text,
+        iar in caz contrar acesta se deschide in format binar.
+
+8) EXIT: La apelarea acestei comenzi, se inchide programul.
+
+
+
+Mesaje de eroare:
+Pentru toate comenzile, cu exceptia comenzii LOAD, daca nu exista un fisier incarcat, se da mesaj de eroare.
+1) LOAD: In cazul in care numarul de cuvinte e mai mare ca 2 sau egal cu 1, se da
+        mesaj de eroare. Altfel, daca fisierul dat ca parametru nu exista, se da mesaj de eroare.
+
+2) SELECT: Daca numarul de cuvinte are o valoare egala cu 1 sau 3 sau este mai
+          mare decat 4, se da mesaj de eroare. In cazul in care numarul de
+          cuvinte este egal cu 4, daca coordonatele date nu apartin intervalului
+          corespunzator sau nu reprezinta valori numerice, acestea sunt considerate invalide.
+          Daca numarul de cuvinte este egal cu 2 si al doilea parametru e diferit de "ALL", comanda nu mai e valabila.
+
+3) ROTATE: Pentru un numar de cuvinte mai mare ca 2 sau egal cu 1, se da mesaj de eroare.
+          De asemenea, daca unghiul nu e divizibil cu 90, nu se mai face rotatia si se da un mesaj de eroare.
+
+4) CROP: In cazul in care numarul de cuvinte este mai mare ca 1, se considera
+        comanda invalida si se atentioneaza utilizatorul.
+
+5) GRAYSCALE: Daca numarul de cuvinte nu este egal cu 1, nu se mai aplica
+             filtrul Grayscale si se informeaza utilizatorul.
+
+6) SEPIA: Daca numarul de cuvinte nu este egal cu 1, nu se mai aplica
+         filtrul Sepia si se informeaza utilizatorul. De asemenea, in cazul
+         in care imaginea este gri, acest filtru nu este disponibil si se afiseaza un mesaj de eroare.
+
+7) SAVE: Daca numarul de cuvinte nu este egal cu 2 sau 3, comanda devine invalida.
+        Altfel, daca numarul de cuvinte este 3 si al doilea cuvant este diferit de "ascii", se da un mesaj de eroare.
+        In cazul in care fisierul dat ca parametru nu exista, se atentioneaza utilizatorul.
+
+8) EXIT: Daca numarul de cuvinte este mai mare decat 1, se da mesaj de eroare.
+
+9) Comanda invalida: Se atentioneaza utilizatorul.
